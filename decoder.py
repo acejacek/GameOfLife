@@ -36,7 +36,7 @@ def decode_object(input_string):
                         if len(row) > max_length:
                             max_length = len(row)
                     for row in result:
-                        for i in range(len(row),max_length):
+                        for _ in range(len(row),max_length):
                             row.append(0)
                     
                     print('object size: {} by {}').format(len(result),max_length)
