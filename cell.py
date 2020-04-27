@@ -16,7 +16,7 @@ class Cell:
         self.alive = alive
         self.new_state = self.alive
 
-        Cell.population.append(self)
+        self.population.append(self)
 
     @classmethod
     def incGeneration(cls):
@@ -42,36 +42,35 @@ class Cell:
                             xoff + yoff * Cell.dimension].new_state = cell_state
 
     @classmethod
-    def __get_cell_status(cls, x, y):
-
-        if x >= 0 and x < Cell.dimension and y >= 0 and y < Cell.dimension:
-            return Cell.population[x + y * Cell.dimension].alive
-        else:
-            return 0
-
-    @classmethod
     def count(cls, x, y):
         """ count how many neighbours are around cell """
 
+        def get_cell_status(x, y):
+
+            if x >= 0 and x < Cell.dimension and y >= 0 and y < Cell.dimension:
+                return Cell.population[x + y * Cell.dimension].alive
+            else:
+                return 0
+            
         left = x - 1
         right = x + 1
         up = y - 1
         down = y + 1
 
         result = 0
-        result += Cell.__get_cell_status(left, up)
-        result += Cell.__get_cell_status(x, up)
-        result += Cell.__get_cell_status(right, up)
-        result += Cell.__get_cell_status(left, y)
-        result += Cell.__get_cell_status(right, y)
-        result += Cell.__get_cell_status(left, down)
-        result += Cell.__get_cell_status(x, down)
+        result += get_cell_status(left, up)
+        result += get_cell_status(x, up)
+        result += get_cell_status(right, up)
+        result += get_cell_status(left, y)
+        result += get_cell_status(right, y)
+        result += get_cell_status(left, down)
+        result += get_cell_status(x, down)
 
         if result == 0 or result > 3:
             # don't count any longer, it will not change the end effect
             return result
 
-        result += Cell.__get_cell_status(right, down)
+        result += get_cell_status(right, down)
 
         return result
 

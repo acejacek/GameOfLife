@@ -68,15 +68,13 @@ def draw():
             # copy status from previous calculation
             cell.alive = cell.new_state
 
-            if cell.alive == 1:
-                stroke(255)
-            else:
-                stroke(0)
+            stroke(255) if cell.alive == 1 else stroke(0)
+                
             point(cell.screen_x, cell.screen_y)
 
     for cell in Cell.population:
 
-        n = Cell.count(cell.x, cell.y)
+        n = cell.count(cell.x, cell.y)
 
         if cell.alive == 1 and (n < 2 or n > 3):  # kill
             cell.new_state = 0
